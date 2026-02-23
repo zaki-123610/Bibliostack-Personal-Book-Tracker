@@ -1,0 +1,21 @@
+<%- include('./partials/navbar.ejs') %>
+
+<div class="container">
+    <div class="Logo-côté-gauche"><span class="logo">📚</span></div>
+    <h1>Bienvenue sur Bibliostack</h1>
+    <p>Connecte-toi pour accéder à ta bibliothèque personnelle, <br>
+         ajouter tes livres lus et garder tes notes de lecture.</p>
+    <div class="btn-cn-cr">
+        <button class="btn-lg-btn-lg-accent" onclick="window.location.href='/login'">🔑 Se connecter</button>
+        
+        <button class="btn-lg btn-lg-outline" style="border: 1.5px solid var(--accent); 
+        color: var(--accent); background: transparent; border-radius: 11px; padding: 12px 28px;
+         font-family: 'DM Sans',sans-serif; font-size: 0.92rem; font-weight:500; cursor:pointer;" 
+        onclick="window.location.href='/register'">✨ Créer un compte</button>
+    </div>
+
+</div>
+    <script src="/js/script.js">
+        
+    </script>
+<%- include('./partials/footer.ejs') %>

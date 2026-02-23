@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Bibliostack</title>
+</head>
+<body>
+    <a href="/" class="Retour">← Retour </a>
+<div class="logindiv">
+
+  <div class="leftlogin">
+
+    <div class="left-logo">
+      <div class="auth-logo-icon">📚</div>
+      <span class="auth-logo-name">Bibliostack</span>
+    </div>
+    <h2 class="left-title">Retrouve tes lectures préférées</h2>
+    <p class="left-desc">Accède à toute ta bibliothèque personnelle et tes notes de lecture en un instant.</p>
+    <div class="left-features">
+      <div class="left-feature">
+        <div class="left-feature-icon">📖</div>
+        <span>Tous tes livres au même endroit</span>
+      </div>
+      <div class="left-feature">
+        <div class="left-feature-icon">⭐</div>
+        <span>Tes notes et avis personnels</span>
+      </div>
+      <div class="left-feature">
+        <div class="left-feature-icon">🎨</div>
+        <span>Couvertures automatiques via ISBN</span>
+      </div>
+    </div>
+
+  </div>
+  <div class="rightlogin">
+    <h2 class="right-title">Bon retour ! 👋</h2>
+    <p class="right-subtitle">Connecte-toi à ton compte Bibliostack</p>
+
+    <form action="/login" method="POST">
+      <div class="form-group">
+        <label>📧 Adresse email</label>
+        <input type="email" name="username" placeholder="ton@email.com" required autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label>🔒 Mot de passe</label>
+        <input type="password" name="password" placeholder="••••••••" required autocomplete="off">
+      </div>
+      <button type="submit" class="btn-auth">
+        🔑 Se connecter
+      </button>
+    </form>
+
+    <div class="auth-switch">
+      <p>----------tu n'as pas de compte ?----------</p>
+      <a href="/register" class="crcompte">Créer un compte gratuitement →</a>
+    </div>
+  </div>
+   </div>
+
+</body>
+</html>

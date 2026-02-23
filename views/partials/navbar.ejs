@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Bibliostack</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+        <!-- views/partials/navbar.ejs -->
+<nav class="top">
+  <!-- LOGO -->
+   
+  <a href="" class="nav-logo">
+    <div class="logo-icon"></div>
+    <div class="logo-text">
+      <span class="logo-name">Biblio<span>stack</span></span>
+      <span class="logo-tagline">Ma bibliothèque</span>
+    </div>
+  </a>
+
+  <!-- LIENS -->
+  <div class="nav-links">
+    <% if (user) { %>
+      <!-- ✅ Connecté -->
+      <div class="user-badge">
+        <div class="user-avatar">
+          <%= user.email[0].toUpperCase() %>
+        </div>
+        <span class="user-name"><%= user.email %></span>
+      </div>
+      <button class="btn-nav btn-nav-add" onclick="openAddModal()">
+        + Ajouter un livre
+      </button>
+      <a href="/logout" class="btn-nav btn-nav-logout">
+        Déconnexion
+      </a>
+
+    <% } else { %>
+      <!-- ❌ Non connecté -->
+      <a href="/login" class="btn-nav btn-nav-login">
+        Se connecter
+      </a>
+      <a href="/register" class="btn-nav btn-nav-register">
+        S'inscrire
+      </a>
+    <% } %>
+  </div>
+  
+</nav>

@@ -1,0 +1,43 @@
+<!-- views/partials/footer.ejs -->
+<footer>
+  <div class="footer-content">
+    <!-- LOGO -->
+    <div class="footer-logo">
+      <div class="logo-icon"></div>
+      <span class="footer-logo-name">Biblio<span>stack</span></span>
+    </div>
+
+    <!-- DATE -->
+    <div class="footer-date">
+      <span class="footer-date-icon">📅</span>
+      <span id="footer-date"></span>
+    </div>
+
+    <!-- COPYRIGHT -->
+    <div class="footer-copy">
+      © <span id="footer-year"></span> Bibliostack — Tous droits réservés
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Date automatique
+  const now = new Date();
+
+  // Affiche la date complète
+  document.getElementById('footer-date').textContent =
+    now.toLocaleDateString('fr-FR', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+
+  // Affiche l'année dans le copyright
+  document.getElementById('footer-year').textContent =
+    now.getFullYear();
+</script>
+
+
+</body>
+</html>

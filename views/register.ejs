@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bibliostack</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="/" class="Retour">← Retour </a>
+    <div class="logindiv">
+
+  <!-- ===== CÔTÉ GAUCHE ===== -->
+  <div class="leftregister">
+
+    <!-- Logo -->
+    <div class="left-logo">
+      <div class="auth-logo-icon">📚</div>
+      <span class="auth-logo-name">Bibliostack</span>
+    </div>
+
+    <!-- Titre -->
+    <h2 class="left-title">Commence ta bibliothèque aujourd'hui</h2>
+    <p class="left-desc">Crée ton compte gratuitement et commence à enregistrer tes lectures dès maintenant.</p>
+
+    <!-- Features -->
+    <div class="left-features">
+      <div class="left-feature">
+        <div class="left-feature-icon">🔒</div>
+        <span>Tes données privées et sécurisées</span>
+      </div>
+      <div class="left-feature">
+        <div class="left-feature-icon">⭐</div>
+        <span>Autant de livres que tu veux</span>
+      </div>
+      <div class="left-feature">
+        <div class="left-feature-icon">🎨</div>
+        <span>Écris tes notes et résumés</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== CÔTÉ DROIT ===== -->
+  <div class="rightlogin">
+    <h2 class="right-title">Créer un compte ✨</h2>
+    <p class="right-subtitle">Rejoins Bibliostack gratuitement</p>
+
+    <form action="/register" method="POST">
+      <div class="form-group">
+        <label>👤 Prénom</label>
+        <input type="text" name="username" placeholder="Ton pénom " required autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label>📧 Adresse email</label>
+        <input type="email" name="email" placeholder="ton@email.com" required autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label>🔒 Mot de passe</label>
+        <input type="password" name="password" placeholder="••••••••" required autocomplete="off">
+      </div>
+      <button type="submit" class="btn-auth">
+        ✨Créer mon compte
+      </button>
+    </form>
+
+    <div class="auth-switch">
+      <p>----------tu as déjà un compte ?----------</p>
+      <a href="/login" class="crcompte">Créer un compte gratuitement →</a>
+    </div>
+  </div>
+   </div>
+</body>
+</html>

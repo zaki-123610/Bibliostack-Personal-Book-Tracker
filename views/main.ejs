@@ -1,0 +1,292 @@
+<%- include('partials/navbar') %>
+
+<div class="hero" style="margin-right: 30%; ">
+    <div class="hero-label">
+    -
+    Ma collection personnelle
+</div>
+<h1>Mes lecture,<br><em>mes découvertes.</em></h1>
+    <p>Bienvenue Ali ! Voici tous tes livres lus et tes notes personnelles.</p>
+</div>
+
+
+<div class="messtat" style="margin-right: 30%; ">
+    <div class="boxstat">
+        <div class="livrelogo">📚</div>
+        <div>
+            <h1 style="margin-bottom: 0%;"><%= totalLivres %></h1>
+            <p style="color: grey;">Livres lus</p>
+        </div>
+    </div>
+    <div class="boxstat">
+        <div class="etlogo">⭐</div>
+        <div>
+            <h1 style="margin-bottom: 0%;"><%= moyenneNote %></h1>
+            <p style="color: grey;">Note moyenne</p>
+        </div>
+    </div>
+    <div class="boxstat">
+        <div class="notelogo">📝</div>
+        <div>
+            <h1 style="margin-bottom: 0%;"><%= totalNotes %></h1>
+            <p style="color: grey;">Notes écrites</p>
+        </div>
+    </div>
+</div>
+<h2 class="section-title" >
+  Tous mes livres
+</h2>
+
+<div class="books-section">
+  <% if (books.length === 0) { %>
+    <div class="no-books">
+      <p>📚 Tu n'as pas encore ajouté de livres !</p>
+    </div>
+  <% } else { %>
+    <div class="books-list">
+      <% books.forEach(book => { %>
+        <div class="book-card">
+          <div class="book-cover-wrap">
+            <% if (book.isbn) { %>
+              <img 
+                src="https://covers.openlibrary.org/b/isbn/<%= book.isbn %>-M.jpg"
+                alt="<%= book.title %>"
+                onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+              >
+            <% } %>
+            <div class="cover-fallback" style="display:none">📗</div>
+          </div>
+
+          <div class="book-body">
+            <div class="book-top">
+              <div class="book-meta">
+                <div class="book-title"><%= book.title %></div>
+                <div class="book-author"><%= book.author %></div>
+              </div>
+              <div class="rating-badge">
+                <span class="score"><%= book.rating %></span>
+                <span class="out-of">/10</span>
+              </div>
+            </div>
+
+            <div class="book-bottom">
+              <span class="book-date">📅 <%= book.date_read ? new Date(book.date_read).toLocaleDateString('fr-FR') : 'Non définie' %></span>
+              <div class="book-actions">
+<div class="book-actions">
+  <button class="btn-action btn-notes"
+    data-title="<%= book.title %>"
+    data-author="<%= book.author %>"
+    data-isbn="<%= book.isbn || '' %>"
+    data-notes="<%= encodeURIComponent(book.notes || 'Aucune note écrite.') %>">📝 Notes</button>
+
+  <button class="btn-action btn-edit"
+    data-id="<%= book.id %>"
+    data-title="<%= book.title %>"
+    data-author="<%= book.author %>"
+    data-date="<%= book.date_read || '' %>"
+    data-isbn="<%= book.isbn || '' %>"
+    data-rating="<%= book.rating %>"
+    data-notes="<%= encodeURIComponent(book.notes || '') %>">✏️ Modifier</button>
+
+  <button class="btn-action btn-delete"
+    data-id="<%= book.id %>"
+    data-title="<%= book.title %>">🗑️</button>
+</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      <% }); %>
+    </div>
+  <% } %>
+</div>
+
+<div class="modal-overlay" id="notesModal" onclick="closeModalOutside(event, 'notesModal')">
+  <div class="modal-notes">
+    <button class="btn-close" onclick="closeModal('notesModal')">✕</button>
+    <div class="notes-modal-header">
+      <img id="notes-cover" src="" alt="">
+      <div class="notes-header-info">
+        <h3 id="notes-title"></h3>
+        <p id="notes-author"></p>
+      </div>
+    </div>
+    <div class="notes-modal-body">
+      <div class="notes-content" id="notes-content"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="editModal" onclick="closeModalOutside(event, 'editModal')">
+  <div class="modal-edit">
+    <button class="btn-close" onclick="closeModal('editModal')">✕</button>
+    <div class="edit-modal-header">
+      <div class="edit-icon">✏️</div>
+      <div>
+        <h2>Modifier le livre</h2>
+        <p>Mets à jour les informations</p>
+      </div>
+    </div>
+    <div class="edit-modal-body">
+      <form action="/books/edit" method="POST">
+        <input type="hidden" name="id" id="edit-id">
+        <div class="form-group">
+          <label>📖 Titre</label>
+          <input type="text" name="title" id="edit-title">
+        </div>
+        <div class="form-group">
+          <label>👤 Auteur</label>
+          <input type="text" name="auther" id="edit-auther">
+        </div>
+        <div class="form-group">
+          <label>📅 Date</label>
+          <input type="date" name="date" id="edit-date">
+        </div>
+        <div class="form-group">
+          <label>🔢 ISBN</label>
+          <input type="text" name="isbn" id="edit-isbn">
+        </div>
+        <div class="form-group">
+          <label>⭐ Note</label>
+          <input type="number" name="note" id="edit-note" min="1" max="10">
+        </div>
+        <div class="form-group">
+          <label>📝 Notes</label>
+          <textarea name="notes" id="edit-notes"></textarea>
+        </div>
+        <div class="modal-actions">
+          <button type="submit" class="btn-save-blue">💾 Sauvegarder</button>
+        </div>
+      </form>
+      <button class="btn-cancel" onclick="closeModal('editModal')">Annuler</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="deleteModal" onclick="closeModalOutside(event, 'deleteModal')">
+  <div class="modal-delete">
+    <button class="btn-close" onclick="closeModal('deleteModal')">✕</button>
+    <div class="delete-icon-wrap">🗑️</div>
+    <h2>Supprimer ce livre ?</h2>
+    <p id="delete-msg">Cette action est irréversible.</p>
+    <form action="/books/delete" method="POST">
+      <input type="hidden" name="id" id="delete-id">
+      <div class="modal-actions">
+        <button type="submit" class="btn-confirm-delete">Oui, supprimer</button>
+      </div>
+    </form>
+    <button class="btn-cancel" onclick="closeModal('deleteModal')">Annuler</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="addModal">
+
+  <div class="modal-add">
+
+    <button class="btn-close" onclick="closeAddModal()">✕</button>
+
+    <div class="add-modal-header">
+      <div class="add-icon">📚</div>
+      <div>
+        <h2>Ajouter un livre</h2>
+        <p>Enregistre un nouveau livre dans ta collection</p>
+      </div>
+    </div>
+
+    <div class="add-modal-body">
+      <form action="/books/add" method="POST">
+
+        <div class="form-group">
+          <label>📖 Titre du livre</label>
+          <input type="text" name="title" placeholder="ex: Atomic Habits" required style="width: 90%;" autocomplete="off">
+        </div>
+
+        <div class="form-group">
+          <label>👤 Auteur</label>
+          <input type="text" name="auther" placeholder="ex: James Clear" required style="width: 90%;" autocomplete="off">
+        </div>
+
+        <div class="form-group">
+          <label>📅 Date de lecture</label>
+          <input type="date" name="date" style="width: 90%;">
+        </div>
+
+        <div class="form-group">
+          <label>🔢 ISBN</label>
+          <input type="text" name="isbn" placeholder="ex: 9780735211292" style="width: 90%;">
+        </div>
+
+        <div class="form-group">
+          <label>⭐ Note (1-10)</label>
+          <input type="number" name="note" min="1" max="10" placeholder="ex: 9" style="width: 90%;">
+        </div>
+
+        <div class="form-group">
+          <label>📝 Mes notes personnelles</label>
+          <textarea name="notes" placeholder="Ce que j'ai retenu..." style="width: 90%;"></textarea>
+        </div>
+
+        <button type="submit" class="btn-save-green">✅ Ajouter à ma bibliothèque</button>
+
+      </form>
+        <button type="button" class="btn-cancel" onclick="closeAddModal()">Annuler</button>
+
+    </div>
+
+  </div>
+</div>
+
+<script>
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+function closeModalOutside(event, id) {
+  if (event.target.id === id) closeModal(id);
+}
+function openAddModal() {
+  openModal('addModal');
+}
+function closeAddModal() {
+  closeModal('addModal');
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+
+  document.querySelectorAll('.btn-notes').forEach(btn => {
+    btn.addEventListener('click', function () {
+      document.getElementById('notes-title').textContent = this.dataset.title;
+      document.getElementById('notes-author').textContent = this.dataset.author;
+      document.getElementById('notes-content').textContent = decodeURIComponent(this.dataset.notes);
+      document.getElementById('notes-cover').src = `https://covers.openlibrary.org/b/isbn/${this.dataset.isbn}-M.jpg`;
+      openModal('notesModal');
+    });
+  });
+
+  document.querySelectorAll('.btn-edit').forEach(btn => {
+    btn.addEventListener('click', function () {
+      document.getElementById('edit-id').value = this.dataset.id;
+      document.getElementById('edit-title').value = this.dataset.title;
+      document.getElementById('edit-auther').value = this.dataset.author;
+      document.getElementById('edit-date').value = this.dataset.date;
+      document.getElementById('edit-isbn').value = this.dataset.isbn;
+      document.getElementById('edit-note').value = this.dataset.rating;
+      document.getElementById('edit-notes').value = decodeURIComponent(this.dataset.notes);
+      openModal('editModal');
+    });
+  });
+
+  document.querySelectorAll('.btn-delete').forEach(btn => {
+    btn.addEventListener('click', function () {
+      document.getElementById('delete-id').value = this.dataset.id;
+      document.getElementById('delete-msg').textContent = `Es-tu sûr de vouloir supprimer "${this.dataset.title}" ?`;
+      openModal('deleteModal');
+    });
+  });
+
+});
+</script>
+<%- include('partials/footer') %>
