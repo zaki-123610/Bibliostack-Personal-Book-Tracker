@@ -135,7 +135,7 @@ bibliostack/
 
 ## 👤 Auteur
 
-**Ali** — Projet fullstack personnel
+**ZAKI** — Projet fullstack personnel
 
 ---
 
